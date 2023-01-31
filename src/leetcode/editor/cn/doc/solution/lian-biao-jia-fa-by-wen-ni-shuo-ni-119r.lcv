@@ -1,0 +1,65 @@
+### 解题思路
+
+链表加法，主要余数处理
+
+### 代码
+
+* java
+
+```java
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode e1 = l1;
+        ListNode e2 = l2;
+        ListNode head = null;
+        ListNode tail = null;
+        int pop = 0;
+        while(e1 != null && e2 != null){
+            int temp = (e1.val+e2.val+pop);
+            ListNode e = new ListNode(temp%10);
+            if(head == null){
+                head = e;
+            }else {
+                tail.next = e;
+            }
+            tail = e;
+            pop = temp/10;
+            e1 = e1.next;
+            e2 = e2.next;
+        }
+        if(e1 != null){
+            while(e1 != null){
+                int temp = (e1.val+pop);
+                ListNode e = new ListNode(temp%10);
+                pop = temp/10;
+                tail.next = e;
+                tail = e;
+                e = new ListNode(e1.val%10);
+                e1 = e1.next;
+            }
+        }
+       if(e2 != null){
+            while(e2 != null){
+                int temp = (e2.val+pop);
+                ListNode e = new ListNode(temp%10);
+                pop = temp/10;
+                tail.next = e;
+                tail = e;
+                e = new ListNode(e2.val%10);
+                e2 = e2.next;
+            }
+        }
+        if(pop != 0) tail.next = new ListNode(1);
+        return head;
+    }
+}
+```
+
